@@ -1,33 +1,14 @@
-from users.domain_event_handlers import UserRegisteredWithEmailHandler
+from pubsub import PersistentPubSub
 from users.models import User
 
 
-class RegisterUserWithEmail(object):
-    def __init__(self, email, password) -> None:
-        super().__init__()
+def register_user_with_email(email, password):
+    events = User.register_user_with_email(email, password)
 
-        self.email = email
-        self.password = password
-
-    def execute(self):
-        user = User()  # Don't mess with Django ORM
-        events = user.register_user_with_email(self.email, self.password)
-
-        # Demo code this should be convention based by class name
-        user.apply_user_created(events[0])
-        UserRegisteredWithEmailHandler().handle(events[1])
+    PersistentPubSub.publish(events)
 
 
-class RegisterUserWithFacebook(object):
-    def __init__(self, fb_email, fb_token) -> None:
-        super().__init__()
-        self.fb_token = fb_token
-        self.fb_email = fb_email
+def register_user_with_facebook(fb_email, fb_token):
+    events = User.register_user_with_facebook(fb_email, fb_token)
 
-    def execute(self):
-        user = User()
-        events = user.register_user_with_facebook(self.fb_email, self.fb_token)
-
-        # Demo code this should be convention based by class name
-        user.apply_user_created(events[0])
-        user.apply_social_network_added(events[1])
+    PersistentPubSub.publish(events)

@@ -37,7 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users.apps.UsersConfig'
+    'pubsub.apps.PubsubConfig',
+    'users.apps.UsersConfig',
+    'marketing.apps.MarketingConfig',
+    'e2e_tests.apps.E2ETestsConfig',
+
 ]
 
 MIDDLEWARE = [

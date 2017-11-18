@@ -1,6 +1,4 @@
-class UserRegisteredWithEmailHandler(object):
-    def handle(self, event):
-        pass
-
-        # Send email
-        # Send BI events
+def handle_user_registered_with_email(event):
+    # Send email
+    # Send BI events
+    pass
