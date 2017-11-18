@@ -18,3 +18,16 @@ class RegisterUserWithEmail(object):
         UserRegisteredWithEmailHandler().handle(events[1])
 
 
+class RegisterUserWithFacebook(object):
+    def __init__(self, fb_email, fb_token) -> None:
+        super().__init__()
+        self.fb_token = fb_token
+        self.fb_email = fb_email
+
+    def execute(self):
+        user = User()
+        events = user.register_user_with_facebook(self.fb_email, self.fb_token)
+
+        # Demo code this should be convention based by class name
+        user.apply_user_created(events[0])
+        user.apply_social_network_added(events[1])
